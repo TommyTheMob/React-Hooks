@@ -1,43 +1,30 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './dimensions.scss'
 
-class Dimensions extends React.Component {
-    state = {
+const Dimensions = () => {
+    const [dimensions, setDimensions] = useState({
         width: null,
         height: null,
-    }
-    componentDidMount() {
-        window.addEventListener('resize', this.onResize)
+    })
 
+    useEffect(() => {
         const { innerWidth, innerHeight } = window
-        this.setDimensions(innerWidth, innerHeight)
-    }
+        setDimensions({width: innerWidth, height: innerHeight})
+        document.title = `${innerWidth} x ${innerHeight}`
 
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.onResize)
-    }
+        const onResize = (e) => {
+            const { innerWidth, innerHeight } = e.target
+            setDimensions({width: innerWidth, height: innerHeight})
+            document.title = `${innerWidth} x ${innerHeight}`
+        }
+        window.addEventListener('resize', onResize)
 
-    onResize = (e) => {
-        const { innerWidth, innerHeight } = e.target
-        this.setDimensions(innerWidth, innerHeight)
-    }
+        return () => {
+            window.removeEventListener('resize', onResize)
+        }
+    }, []);
 
-    setDimensions = (width, height) => {
-        this.setState({
-            width,
-            height,
-        })
-
-        document.title = `${width} x ${height}`
-    }
-
-    render() {
-        return (
-            <div className="dimensions">
-                { `${this.state.width}px - ${this.state.height}px` }
-            </div>
-        )
-    }
+    return <div className="dimensions">{ `${dimensions.width}px - ${dimensions.height}px` }</div>
 }
 
 export default Dimensions

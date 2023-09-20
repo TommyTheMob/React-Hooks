@@ -1,0 +1,26 @@
+.btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  margin: 0 10px;
+
+  width: 100px;
+  height: 35px;
+
+  border-radius: 25px;
+  border: 1px solid #ccc;
+
+  background: aquamarine;
+
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #646464;
+
+  &:hover {
+    cursor: pointer;
+
+    background: rgba(127, 255, 212, 0.7);
+  }
+}
